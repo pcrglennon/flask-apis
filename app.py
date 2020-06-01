@@ -4,7 +4,7 @@ from cross_text import cross_text as cross_text_transform
 
 app = Flask(__name__)
 
-@app.route('/cross-text', methods=['GET'])
+@app.route('/cross-text', methods=['POST'])
 def cross_text():
     text = request.args.get('text')
     axis_index = int(request.args.get('axis_index', 0))
