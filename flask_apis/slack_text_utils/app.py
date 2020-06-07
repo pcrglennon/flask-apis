@@ -14,6 +14,6 @@ def cross_text():
 
     return {
         'response_type': 'in_channel',
-        'text': cross_text_transform(text, axis_index)
+        'text': cross_text_transform(text, axis_index=axis_index, ignore_colon_emojis=True)
     }
 
