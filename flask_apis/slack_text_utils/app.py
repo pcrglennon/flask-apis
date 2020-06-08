@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from .cross_text import cross_text as cross_text_transform
+from flask_apis.slack_text_utils.cross_text import cross_text as cross_text_transform
 
 slack_text_utils_api = Blueprint('slack_text_utils_api', __name__)
 
@@ -14,6 +14,6 @@ def cross_text():
 
     return {
         'response_type': 'in_channel',
-        'text': cross_text_transform(text, axis_index=axis_index, ignore_colon_emojis=True)
+        'text': cross_text_transform(text, axis_index=axis_index)
     }
 
