@@ -29,7 +29,7 @@ def cross_text(text: str, axis_index: int = 0, axis_max_length: int = 100) -> st
         string += f'\n{vertical_axis_padding}{component}'
 
     if original_axis_length > axis_max_length:
-        string += f'\n\n_This message has been truncated to reduce noise, maximum message length is: {axis_max_length}_'
+        string += f'\n\n_This message has been truncated, maximum message length is: {axis_max_length}_'
 
     return string
 
