@@ -3,12 +3,16 @@ import re
 
 # TODO - make this a class!
 
-def cross_text(text: str, axis_index: int = 0) -> str:
+def cross_text(text: str, axis_index: int = 0, axis_max_length: int = 100) -> str:
     if not 0 <= axis_index < len(text):
         return
 
     raw_text_components = split_text(text)
     text_components = format_text_components(raw_text_components)
+
+    original_axis_length = len(text_components)
+    if original_axis_length > axis_max_length:
+        text_components = text_components[:axis_max_length]
 
     vertical_axis_padding = ' ' * (axis_index * 2)
     string = ''
@@ -23,6 +27,9 @@ def cross_text(text: str, axis_index: int = 0) -> str:
     # vertical axis (end)
     for component in text_components[(axis_index + 1):]:
         string += f'\n{vertical_axis_padding}{component}'
+
+    if original_axis_length > axis_max_length:
+        string += f'\n\n_This message has been truncated to reduce noise, maximum message length is: {axis_max_length}_'
 
     return string
 
