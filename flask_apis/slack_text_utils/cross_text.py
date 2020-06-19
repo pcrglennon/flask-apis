@@ -1,11 +1,9 @@
 import itertools
 import re
 
-# TODO - make this a class!
-
 def cross_text(text: str, axis_index: int = 0, axis_max_length: int = 100) -> str:
     if not 0 <= axis_index < len(text):
-        return
+        axis_index = 0
 
     raw_text_components = split_text(text)
     text_components = format_text_components(raw_text_components)
