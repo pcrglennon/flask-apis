@@ -6,6 +6,21 @@ import httpx
 
 movie_db_utils_api = Blueprint('movie_db_utils_api', __name__)
 
+# Direct relay to the TMDB API /search/person endpoint, included here so that clients can utilize
+# search without storing their own TMDB API token.
+# This endpoint tacks on the API key, and forwards any incoming params (e.g. 'language', 'page')
+@movie_db_utils_api.route('/tmdb-api-proxy/search/person', methods=['GET'])
+def search_person():
+    tmdb_api_key = os.getenv('TMDB_API_KEY')
+    api_params = { 'api_key': tmdb_api_key, **request.values }
+
+    response = httpx.get(
+        f'https://api.themoviedb.org/3/search/person',
+        params=api_params
+    )
+
+    return response.json()
+
 @movie_db_utils_api.route('/actors-crossover', methods=['GET'])
 def actors_crossover():
     actor_id_strings = request.args.get('actor_ids', '').split(',')
@@ -78,7 +93,7 @@ def build_movie_object(movie_id: int, credit_object: dict):
         'credits': []
     }
 
-# Example response:
+# Example response for /actors-crossover:
 #
 # [
 #     {
