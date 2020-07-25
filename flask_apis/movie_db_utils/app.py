@@ -34,7 +34,7 @@ def actors_crossover():
 
     movies_id_map = build_movies_id_map(actors_data)
 
-    crossover_movies = list(filter(lambda movie: len(movie['credits']) > 1, movies_id_map.values()))
+    crossover_movies = list(filter(lambda movie: len(movie['actor_credits']) > 1, movies_id_map.values()))
 
     return {
         'crossover_movies': crossover_movies
@@ -74,7 +74,7 @@ def build_movies_id_map(actors_data: [dict]):
             if not movie:
                 movie = build_movie_object(movie_id, credit_object)
 
-            movie['credits'].append({
+            movie['actor_credits'].append({
                 'actor_id': actor_id,
                 'actor_name': actor_name,
                 'character': character,
@@ -87,10 +87,10 @@ def build_movies_id_map(actors_data: [dict]):
 def build_movie_object(movie_id: int, credit_object: dict):
     return {
         'id': movie_id,
-        'title': credit_object['title'],
-        'release_date': credit_object['release_date'],
-        'poster_path': credit_object['poster_path'],
-        'credits': []
+        'title': credit_object.get('title'),
+        'release_date': credit_object.get('release_date'),
+        'poster_path': credit_object.get('poster_path'),
+        'actor_credits': []
     }
 
 # Example response for /actors-crossover:
@@ -101,7 +101,7 @@ def build_movie_object(movie_id: int, credit_object: dict):
 #         'title': 'Star Wars',
 #         'release_date': '1977-05-25',
 #         'poster_path': '/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg',
-#         'credits': [
+#         'actor_credits': [
 #             {
 #                 'actor_id': 2,
 #                 'actor_name': 'Mark Hamill',
